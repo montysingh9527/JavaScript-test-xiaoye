@@ -6,7 +6,12 @@ function Test(){
 
 Test()
 
-console.log("demo.js")
+const test = new Test(); // {}
+// new 也是函数执行
+// new -> 改变了函数内部的执行过程 -> 构造函数 -> 一个新的对象(构造函数构造出来的实例、构造函数实例化对象、实例化对象)
+// JS当中任何对象都是实例化对象
+
+// var obj = {} // new Object()
 
 
 
