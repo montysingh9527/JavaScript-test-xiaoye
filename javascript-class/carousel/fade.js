@@ -1,5 +1,6 @@
 import "./css/resets.css";
 import "./css/fade.scss";
+import "animate.css"; // 引入动画库
 
 export default class Fade {
   constructor(
@@ -16,13 +17,16 @@ export default class Fade {
 
     this.duration = duration;
     this._index = defaultIndex;
-    
+
     // 初始化
     this.init();
   }
+  // 定义静态属性
+  static t = null;
 
   init() {
-    this.show();
+    this.show(true);
+    this.play();
   }
 
   get currentIndex() {
@@ -32,16 +36,46 @@ export default class Fade {
   set currentIndex(newValue) {
     // this.currentIndex = newValue;
     // this._index = newValue;
+    this.update(() => {
+      this._index = newValue;
+    });
   }
 
-  show() {
-    // 添加active
-    this.$imgWrappers[this.currentIndex].classList.add("active");
+  // 添加类
+  show(isInitial) {
+    if (isInitial) {
+      // 设置动画
+      for (let i = 0; i < this.$imgWrappers.length; i++) {
+        this.$imgWrappers[i].classList.add("animate__fadeOut");
+      }
+    }
+    this.$imgWrappers[this.currentIndex].classList.remove("animate__fadeOut");
+    this.$imgWrappers[this.currentIndex].classList.add("animate__fadeIn");
     this.$dots[this.currentIndex].classList.add("active");
   }
+  //   删除类
   hide() {
-    // 移除active
-    this.$imgWrappers[this.currentIndex].classList.remove("active");
+    this.$imgWrappers[this.currentIndex].classList.remove("animate__fadeIn");
     this.$dots[this.currentIndex].classList.remove("active");
+    this.$imgWrappers[this.currentIndex].classList.add("animate__fadeOut");
+  }
+
+  update(setIndex) {
+    // 先隐藏
+    this.hide();
+    // 设置索引
+    setIndex();
+    // 添加类
+    this.show();
+  }
+
+  play() {
+    // 访问静态属性 Fade.t
+    Fade.t = setInterval(() => {
+      // 当前索引项大于等于所有图片 ? 设置索引0 : 索引++
+      this.currentIndex >= this.$imgWrappers.length - 1
+        ? (this.currentIndex = 0)
+        : this.currentIndex++;
+    }, this.duration);
   }
 }
