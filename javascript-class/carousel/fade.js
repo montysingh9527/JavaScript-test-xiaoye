@@ -2,7 +2,9 @@ import "./css/resets.css";
 import "./css/fade.scss";
 import "animate.css"; // 引入动画库
 
-export default class Fade {
+import Carousel from ".";   // 引入父类
+
+export default class Fade extends Carousel {
   constructor(
     el,
     {
@@ -10,10 +12,7 @@ export default class Fade {
       duration, //  轮播时间
     }
   ) {
-    this.$el = document.querySelector(el); // 大容器
-    this.$imgWrappers = this.$el.querySelectorAll(".img-wrapper"); // 所有img
-    this.$dotWrapper = this.$el.querySelector(".indicator"); // 小圆点容器
-    this.$dots = this.$dotWrapper.querySelectorAll(".dot"); // 所有小圆点
+    super(el);
 
     this.duration = duration;
     this._index = defaultIndex;
@@ -40,12 +39,6 @@ export default class Fade {
     this.update(() => {
       this._index = newValue;
     });
-  }
-  // 事件监听
-  bindEvent(){
-    this.$el.addEventListener("mouseenter", this.handleMouseEnter.bind(this), false);
-    this.$el.addEventListener("mouseleave", this.handleMouseLeave.bind(this), false);
-    this.$dotWrapper.addEventListener("click", this.handleDotClick.bind(this), false);
   }
   // 鼠标移入 清除定时器
   handleMouseEnter(){

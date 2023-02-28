@@ -2,7 +2,7 @@
 
 
 ```
-javascript-class: 轮播图案例 class使用
+javascript-class: 轮播图案例 class使用  extends  super
 ```
 
 
