@@ -26,6 +26,7 @@ export default class Fade {
 
   init() {
     this.show(true);
+    this.bindEvent();
     this.play();
   }
 
@@ -40,7 +41,24 @@ export default class Fade {
       this._index = newValue;
     });
   }
-
+  // 事件监听
+  bindEvent(){
+    this.$el.addEventListener("mouseenter", this.handleMouseEnter.bind(this), false);
+    this.$el.addEventListener("mouseleave", this.handleMouseLeave.bind(this), false);
+    this.$dotWrapper.addEventListener("click", this.handleDotClick.bind(this), false);
+  }
+  // 鼠标移入 清除定时器
+  handleMouseEnter(){
+    clearInterval(Fade.t);
+  }
+  // 鼠标移出  重新轮播
+  handleMouseLeave(){
+    this.play();
+  }
+  // 点击原点切换轮播图
+  handleDotClick(e){
+    e.target.className === "dot" && (this.currentIndex = [].indexOf.call(this.$dots, e.target));
+  }
   // 添加类
   show(isInitial) {
     if (isInitial) {
