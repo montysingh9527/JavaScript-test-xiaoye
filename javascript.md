@@ -5,7 +5,8 @@
 javascript-class: 轮播图案例 class使用  extends  super
 ```
 ```
-javascript-map():
+javascript-map(): 
+demo.js：生成器迭代器 * yield
 ```
 
 
